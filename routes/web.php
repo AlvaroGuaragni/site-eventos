@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\LocalController;
+use App\Http\Controllers\FornecedorController;
+use App\Http\Controllers\ServicoController;
 
 
 Route::get('/', function () {
@@ -47,6 +49,10 @@ Route::delete('/locais/{id}', [LocalController::class, 'destroy'])->name('local.
 Route::post('/local/salvar/{id?}', [LocalController::class, 'salvar'])->name('local.salvar');
 Route::post('/local/buscar', [LocalController::class, 'buscar'])->name('local.buscar');
 
+// Fornecedor - rotas resource
+Route::resource('fornecedores', FornecedorController::class);
+Route::post('/fornecedores/buscar', [FornecedorController::class, 'buscar'])->name('fornecedores.buscar');
 
-
-
+// Serviço - rotas resource
+Route::resource('servicos', ServicoController::class);
+Route::post('/servicos/buscar', [ServicoController::class, 'buscar'])->name('servicos.buscar');

@@ -19,6 +19,8 @@
             <a href="{{ url('/cliente/listar') }}" class="btn btn-primary btn-lg">Clientes</a>
             <a href="{{ url('/evento/listar') }}" class="btn btn-primary btn-lg">Eventos</a>
             <a href="{{ url('/local/listar') }}" class="btn btn-primary btn-lg text-white">Locais</a>
+            <a href="{{ url('fornecedores') }}" class="btn btn-primary btn-lg text-white">Fornecedores</a>
+            <a href="{{ url('servicos') }}" class="btn btn-primary btn-lg text-white">Serviços</a>
         </div>
     </div>
 

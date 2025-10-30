@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Evento;
 use App\Models\Local;
 use App\Models\Cliente;
+use App\Models\Convidado;
 use Illuminate\Http\Request;
 
 class EventoController extends Controller
@@ -12,13 +13,13 @@ class EventoController extends Controller
 
     public function listar(Request $request)
     {
-        $eventos = Evento::with(['local', 'cliente'])->orderBy('data')->get();
+        $eventos = Evento::with(['local', 'cliente', 'convidados'])->orderBy('data')->get();
         return view('evento', compact('eventos'));
     }
 
     public function cadastrar($id = null)
     {
-        $evento = $id ? Evento::find($id) : null;
+        $evento = $id ? Evento::with('convidados')->find($id) : null;
         $locais = Local::orderBy('local')->get();
         $clientes = Cliente::orderBy('nome')->get();
 
@@ -33,6 +34,8 @@ class EventoController extends Controller
             'cliente_id' => 'nullable|exists:clientes,id',
             'data' => 'required|date',
             'qtdPessoas' => 'required|string|max:100',
+            'convidados' => 'nullable|array',
+            'convidados.*' => 'nullable|string|max:255',
         ]);
 
         if ($id) {
@@ -43,8 +46,21 @@ class EventoController extends Controller
             $evento->update($validated);
             $msg = 'Evento atualizado com sucesso.';
         } else {
-            Evento::create($validated);
+            $evento = Evento::create($validated);
             $msg = 'Evento criado com sucesso.';
+        }
+
+        // Sincroniza convidados (remove vazios, recria tudo)
+        $nomes = collect($request->input('convidados', []))
+            ->map(fn($n) => trim((string)$n))
+            ->filter(fn($n) => $n !== '');
+
+        // Apaga existentes e recria (simples e eficaz)
+        $evento->convidados()->delete();
+        if ($nomes->isNotEmpty()) {
+            $evento->convidados()->createMany(
+                $nomes->map(fn($n) => ['nome' => $n])->all()
+            );
         }
 
         return redirect()->route('evento.listar')->with('success', $msg);

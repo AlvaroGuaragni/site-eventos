@@ -28,7 +28,6 @@
                             <option value="data">Data</option>
                             
                             
-
                         </select>
 
                     </div>
@@ -68,6 +67,7 @@
                             <th>Data</th>
                             <th>Cliente</th>
                             <th>Local</th>
+                            <th>Convidados</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -80,6 +80,16 @@
                                 <td>{{ $item->data }}</td>
                                 <td>{{ $item->cliente->nome ?? '-' }}</td>
                                 <td> {{ $item->local->local ?? '-' }}</td>
+                                <td>
+                                    @php
+                                        $nomes = $item->convidados?->pluck('nome')->all() ?? [];
+                                    @endphp
+                                    @if (count($nomes))
+                                        {{ implode(', ', $nomes) }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
 
                                 <td>
                                     <a href="{{ url('/evento/editar/'.$item->id) }}" class="btn btn-warning btn-sm"><i class="fa-regular fa-pen-to-square"></i></a>

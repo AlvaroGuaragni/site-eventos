@@ -64,16 +64,67 @@
                 <input type="date" required id="data" name="data" value="{{ old('data', $evento->data ?? '') }}" class="form-control">
             </div>
 
-
-
             <div class="mb-3">
                 <label for="qtdPessoas" class="form-label">Quantidade de Pessoas</label>
                 <input type="text" required id="qtdPessoas" name="qtdPessoas" value="{{ old('qtdPessoas', $evento->qtdPessoas ?? '') }}" class="form-control">
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Convidados</label>
+
+                <div id="convidados-container">
+                    @php
+                        $convidadosVelhos = collect(old('convidados', isset($evento) ? $evento->convidados->pluck('nome')->all() : []));
+                        if ($convidadosVelhos->isEmpty()) { $convidadosVelhos = collect(['']); }
+                    @endphp
+
+                    @foreach($convidadosVelhos as $idx => $nome)
+                        <div class="input-group mb-2 convidado-item">
+                            <input type="text" name="convidados[]" class="form-control" placeholder="Nome do convidado" value="{{ $nome }}">
+                            <button type="button" class="btn btn-outline-danger remover-convidado">&times;</button>
+                        </div>
+                    @endforeach
+                </div>
+
+                <button type="button" id="adicionar-convidado" class="btn btn-outline-primary btn-sm">Adicionar convidado</button>
+            </div>
+
             <button type="submit" class="btn btn-primary w-100">Salvar</button>
         </form>
     </div>
+
+    <script>
+        (function() {
+            const container = document.getElementById('convidados-container');
+            const addBtn = document.getElementById('adicionar-convidado');
+
+            function makeItem(value = '') {
+                const div = document.createElement('div');
+                div.className = 'input-group mb-2 convidado-item';
+                div.innerHTML = `
+                    <input type="text" name="convidados[]" class="form-control" placeholder="Nome do convidado" value="${value}">
+                    <button type="button" class="btn btn-outline-danger remover-convidado">&times;</button>
+                `;
+                return div;
+            }
+
+            addBtn.addEventListener('click', function() {
+                container.appendChild(makeItem(''));
+            });
+
+            container.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('remover-convidado')) {
+                    const items = container.querySelectorAll('.convidado-item');
+                    if (items.length > 1) {
+                        e.target.closest('.convidado-item').remove();
+                    } else {
+                        // mantém pelo menos um input
+                        e.target.closest('.convidado-item').querySelector('input').value = '';
+                    }
+                }
+            });
+        })();
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

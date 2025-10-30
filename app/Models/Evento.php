@@ -31,4 +31,9 @@ class Evento extends Model
     {
         return $this->belongsTo(Local::class, 'local_id');
     }
+
+    public function convidados()
+    {
+        return $this->hasMany(Convidado::class, 'evento_id');
+    }
 }
