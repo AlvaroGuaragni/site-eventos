@@ -6,15 +6,18 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ServicoController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', function () {
     return view('main');
-});
+})->name('main');
 
 Route::get('/home', function () {
     return view('main');
 });
+
+
 
 Route::get('/cliente/cadastrar', [ClienteController::class, 'Cadastrar']);
 Route::post('/cliente/cadastrar', [ClienteController::class, 'salvar'])->name('cliente.salvar');
@@ -49,10 +52,14 @@ Route::delete('/locais/{id}', [LocalController::class, 'destroy'])->name('local.
 Route::post('/local/salvar/{id?}', [LocalController::class, 'salvar'])->name('local.salvar');
 Route::post('/local/buscar', [LocalController::class, 'buscar'])->name('local.buscar');
 
-// Fornecedor - rotas resource
+
+Route::get('/fornecedores/pdf', [FornecedorController::class, 'pdf'])->name('fornecedores.pdf');
+Route::get('/servicos/pdf', [ServicoController::class, 'pdf'])->name('servicos.pdf');
+
+
 Route::resource('fornecedores', FornecedorController::class);
 Route::post('/fornecedores/buscar', [FornecedorController::class, 'buscar'])->name('fornecedores.buscar');
 
-// Serviço - rotas resource
+
 Route::resource('servicos', ServicoController::class);
 Route::post('/servicos/buscar', [ServicoController::class, 'buscar'])->name('servicos.buscar');

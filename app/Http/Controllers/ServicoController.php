@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Servico;
+use App\Models\Fornecedor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ServicoController extends Controller
 {
@@ -15,7 +18,7 @@ class ServicoController extends Controller
 
     public function listar()
     {
-        $servicos = Servico::orderBy('nome')->get();
+        $servicos = Servico::with('fornecedor')->orderBy('nome')->get();
         return view('servicos')->with('servicos', $servicos);
     }
 
@@ -27,13 +30,21 @@ class ServicoController extends Controller
 
     public function cadastrar()
     {
-        return view('servicoCadastrar');
+        $fornecedores = Fornecedor::orderBy('nome')->get();
+        return view('servicoCadastrar')->with('fornecedores', $fornecedores);
     }
 
     public function editar($id)
     {
         $servico = Servico::findOrFail($id);
-        return view('servicoEditar')->with('servico', $servico);
+        $fornecedores = Fornecedor::orderBy('nome')->get();
+        return view('servicoEditar')->with(compact('servico','fornecedores'));
+    }
+
+    // Resource: GET /servicos/{id}/edit
+    public function edit($id)
+    {
+        return $this->editar($id);
     }
 
     // Resource: POST /servicos
@@ -49,10 +60,22 @@ class ServicoController extends Controller
             'preco' => 'required|numeric|min:0',
             'categoria' => 'nullable|string|max:100',
             'descricao' => 'nullable|string',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
+            'fornecedor_id' => 'nullable|exists:fornecedores,id',
         ]);
 
         $servico = $id ? Servico::findOrFail($id) : new Servico();
-        $servico->fill($validated)->save();
+        $servico->fill($validated);
+
+        if ($request->hasFile('imagem')) {
+            if ($servico->exists && $servico->imagem_path && Storage::disk('public')->exists($servico->imagem_path)) {
+                Storage::disk('public')->delete($servico->imagem_path);
+            }
+            $path = $request->file('imagem')->store('servicos', 'public');
+            $servico->imagem_path = $path;
+        }
+
+        $servico->save();
 
         return redirect()->route('servicos.index')->with('success', 'Serviço salvo com sucesso!');
     }
@@ -69,6 +92,9 @@ class ServicoController extends Controller
         $servico = Servico::find($id);
         if (! $servico) {
             return redirect()->route('servicos.index')->with('error', 'Serviço não encontrado.');
+        }
+        if ($servico->imagem_path && Storage::disk('public')->exists($servico->imagem_path)) {
+            Storage::disk('public')->delete($servico->imagem_path);
         }
         $servico->delete();
         return redirect()->route('servicos.index')->with('success', 'Serviço excluído.');
@@ -90,6 +116,18 @@ class ServicoController extends Controller
     public function show($id)
     {
         return redirect()->route('servicos.edit', $id);
+    }
+
+    public function pdf()
+    {
+        try {
+            $servicos = Servico::with('fornecedor')->orderBy('nome')->get();
+            $pdf = Pdf::loadView('pdf.servicos', compact('servicos'));
+            return $pdf->download('relatorio-servicos.pdf');
+        } catch (\Throwable $e) {
+            \Log::error('Erro ao gerar PDF de serviços: '.$e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            return response('Falha ao gerar o PDF de serviços: '.$e->getMessage(), 500);
+        }
     }
 }
 

@@ -9,7 +9,7 @@
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
 <div class="card p-4 shadow" style="width: 460px;">
     <h3 class="mb-3">Cadastrar Fornecedor</h3>
-    <form method="POST" action="{{ route('fornecedores.store') }}">
+    <form method="POST" action="{{ route('fornecedores.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label class="form-label">Nome</label>
@@ -26,6 +26,10 @@
         <div class="mb-3">
             <label class="form-label">CNPJ</label>
             <input class="form-control" name="cnpj">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Logo (jpg, png, webp)</label>
+            <input class="form-control" type="file" name="logo" accept=".jpg,.jpeg,.png,.webp">
         </div>
         <button class="btn btn-primary w-100">Salvar</button>
     </form>

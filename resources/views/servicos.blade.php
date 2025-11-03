@@ -33,7 +33,10 @@
                 </form>
             </div>
         </div>
-        <a href="{{ route('servicos.create') }}" class="btn btn-success"><i class="fa-solid fa-square-plus"></i> Cadastrar</a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('servicos.pdf') }}" class="btn btn-outline-secondary"><i class="fa-solid fa-file-pdf"></i> Baixar PDF</a>
+            <a href="{{ route('servicos.create') }}" class="btn btn-success"><i class="fa-solid fa-square-plus"></i> Cadastrar</a>
+        </div>
     </div>
 
     <div class="card shadow-sm">
@@ -46,6 +49,8 @@
                     <th>Preço</th>
                     <th>Categoria</th>
                     <th>Descrição</th>
+                    <th>Fornecedor</th>
+                    <th>Imagem</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
@@ -57,6 +62,14 @@
                         <td>{{ number_format($s->preco, 2, ',', '.') }}</td>
                         <td>{{ $s->categoria }}</td>
                         <td>{{ \Illuminate\Support\Str::limit($s->descricao, 60) }}</td>
+                        <td>{{ $s->fornecedor->nome ?? '-' }}</td>
+                        <td>
+                            @if($s->imagem_path)
+                                <img src="{{ asset('storage/' . $s->imagem_path) }}" alt="Imagem" style="height:40px; width:auto;">
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td>
                             <a class="btn btn-warning btn-sm" href="{{ route('servicos.edit', $s->id) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                             <form action="{{ route('servicos.destroy', $s->id) }}" method="POST" style="display:inline;">

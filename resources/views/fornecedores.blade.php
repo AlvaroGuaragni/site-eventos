@@ -23,6 +23,7 @@
                                 <option value="email">Email</option>
                                 <option value="telefone">Telefone</option>
                                 <option value="cnpj">CNPJ</option>
+                                
                             </select>
                         </div>
                         <div class="col-md-5">
@@ -35,8 +36,13 @@
                 </form>
             </div>
         </div>
-        <a href="{{ route('fornecedores.create') }}" class="btn btn-success"><i class="fa-solid fa-square-plus"></i> Cadastrar</a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('fornecedores.pdf') }}" class="btn btn-outline-secondary"><i class="fa-solid fa-file-pdf"></i> Baixar PDF</a>
+            <a href="{{ route('fornecedores.create') }}" class="btn btn-success"><i class="fa-solid fa-square-plus"></i> Cadastrar</a>
+        </div>
     </div>
+
+
 
     <div class="card shadow-sm">
         <div class="card-body">
@@ -48,6 +54,7 @@
                     <th>Telefone</th>
                     <th>Email</th>
                     <th>CNPJ</th>
+                    <th>Logo</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
@@ -59,6 +66,13 @@
                         <td>{{ $f->telefone }}</td>
                         <td>{{ $f->email }}</td>
                         <td>{{ $f->cnpj }}</td>
+                        <td>
+                            @if($f->logo_path)
+                                <img src="{{ asset('storage/' . $f->logo_path) }}" alt="Logo" style="height:40px; width:auto;">
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td>
                             <a class="btn btn-warning btn-sm" href="{{ route('fornecedores.edit', $f->id) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                             <form action="{{ route('fornecedores.destroy', $f->id) }}" method="POST" style="display:inline;">

@@ -13,7 +13,13 @@ class Fornecedor extends Model
         'telefone',
         'email',
         'cnpj',
+        'logo_path',
     ];
+
+    public function servicos()
+    {
+        return $this->hasMany(Servico::class, 'fornecedor_id');
+    }
 }
 
 

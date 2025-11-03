@@ -9,7 +9,7 @@
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
 <div class="card p-4 shadow" style="width: 460px;">
     <h3 class="mb-3">Editar Fornecedor</h3>
-    <form method="POST" action="{{ route('fornecedores.update', $fornecedor->id) }}">
+    <form method="POST" action="{{ route('fornecedores.update', $fornecedor->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -27,6 +27,18 @@
         <div class="mb-3">
             <label class="form-label">CNPJ</label>
             <input class="form-control" name="cnpj" value="{{ $fornecedor->cnpj }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label d-block">Logo atual</label>
+            @if($fornecedor->logo_path)
+                <img src="{{ asset('storage/' . $fornecedor->logo_path) }}" alt="Logo" style="height:60px; width:auto;">
+            @else
+                <span>-</span>
+            @endif
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Trocar logo</label>
+            <input class="form-control" type="file" name="logo" accept=".jpg,.jpeg,.png,.webp">
         </div>
         <button class="btn btn-primary w-100">Salvar</button>
     </form>

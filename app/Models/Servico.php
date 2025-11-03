@@ -13,7 +13,14 @@ class Servico extends Model
         'preco',
         'categoria',
         'descricao',
+        'imagem_path',
+        'fornecedor_id',
     ];
+
+    public function fornecedor()
+    {
+        return $this->belongsTo(Fornecedor::class, 'fornecedor_id');
+    }
 }
 
 
