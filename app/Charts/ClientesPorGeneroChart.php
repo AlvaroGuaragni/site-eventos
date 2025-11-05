@@ -32,8 +32,6 @@ class ClientesPorGeneroChart
         }
 
         return $this->chart->pieChart()
-            ->setTitle('Clientes por gênero')
-            ->setSubtitle('Fonte: banco de dados')
             ->addData($data)
             ->setLabels($labels);
     }

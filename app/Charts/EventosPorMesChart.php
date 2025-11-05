@@ -17,7 +17,7 @@ class EventosPorMesChart
 
     public function build(): \ArielMejiaDev\LarapexCharts\BarChart
     {
-        // últimos 12 meses, baseados em "data" do evento; se nulo, usa created_at
+
         $labels = [];
         $dataCounts = [];
 
@@ -38,8 +38,7 @@ class EventosPorMesChart
         }
 
         return $this->chart->barChart()
-            ->setTitle('Eventos por mês (últimos 12)')
-            ->setSubtitle('Fonte: banco de dados')
+            ->setTitle('(últimos 12)')
             ->addData('Eventos', $dataCounts)
             ->setXAxis($labels);
     }

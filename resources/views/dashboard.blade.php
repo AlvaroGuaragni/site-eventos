@@ -9,8 +9,7 @@
 <body class="bg-light">
 	<div class="container py-4">
 		<div class="d-flex justify-content-between align-items-center mb-4">
-			<h1 class="h3 m-0">Dashboard</h1>
-			<a href="{{ route('main') }}" class="btn btn-outline-secondary">Voltar</a>
+			<h1>Dashboard</h1>
 		</div>
 
 		<div class="row g-4">
