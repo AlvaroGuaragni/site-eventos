@@ -16,6 +16,7 @@
         </h1>
 
         <div class="d-grid gap-3 col-6 mx-auto">
+            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">Dashboard (Gráficos)</a>
             <a href="{{ url('/cliente/listar') }}" class="btn btn-primary btn-lg">Clientes</a>
             <a href="{{ url('/evento/listar') }}" class="btn btn-primary btn-lg">Eventos</a>
             <a href="{{ url('/local/listar') }}" class="btn btn-primary btn-lg text-white">Locais</a>

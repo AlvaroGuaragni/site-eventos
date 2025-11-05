@@ -64,3 +64,6 @@ Route::get('/fornecedor/chart', [AlunoController::class, 'chart'])->name('fornec
 
 Route::resource('servicos', ServicoController::class);
 Route::post('/servicos/buscar', [ServicoController::class, 'buscar'])->name('servicos.buscar');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
