@@ -10,7 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ServicoController extends Controller
 {
-    // Resource: GET /servicos
+
     public function index()
     {
         return $this->listar();
@@ -22,7 +22,7 @@ class ServicoController extends Controller
         return view('servicos')->with('servicos', $servicos);
     }
 
-    // Resource: GET /servicos/create
+
     public function create()
     {
         return $this->cadastrar();
@@ -41,13 +41,13 @@ class ServicoController extends Controller
         return view('servicoEditar')->with(compact('servico','fornecedores'));
     }
 
-    // Resource: GET /servicos/{id}/edit
+   
     public function edit($id)
     {
         return $this->editar($id);
     }
 
-    // Resource: POST /servicos
+
     public function store(Request $request)
     {
         return $this->salvar($request);
@@ -80,13 +80,13 @@ class ServicoController extends Controller
         return redirect()->route('servicos.index')->with('success', 'Serviço salvo com sucesso!');
     }
 
-    // Resource: PUT/PATCH /servicos/{id}
+
     public function update(Request $request, $id)
     {
         return $this->salvar($request, $id);
     }
 
-    // Resource: DELETE /servicos/{id}
+
     public function destroy($id)
     {
         $servico = Servico::find($id);
@@ -112,7 +112,7 @@ class ServicoController extends Controller
         return view('servicos', ["servicos" => $dados]);
     }
 
-    // Resource: GET /servicos/{id}
+
     public function show($id)
     {
         return redirect()->route('servicos.edit', $id);

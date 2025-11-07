@@ -9,7 +9,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class FornecedorController extends Controller
 {
-    // Resource: GET /fornecedores
+
     public function index()
     {
         return $this->listar();
@@ -21,7 +21,7 @@ class FornecedorController extends Controller
         return view('fornecedores')->with('fornecedores', $fornecedores);
     }
 
-    // Resource: GET /fornecedores/create
+
     public function create()
     {
         return $this->cadastrar();
@@ -38,13 +38,13 @@ class FornecedorController extends Controller
         return view('fornecedorEditar')->with('fornecedor', $fornecedor);
     }
 
-    // Resource: GET /fornecedores/{id}/edit
+
     public function edit($id)
     {
         return $this->editar($id);
     }
 
-    // Resource: POST /fornecedores
+
     public function store(Request $request)
     {
         return $this->salvar($request);
@@ -76,13 +76,13 @@ class FornecedorController extends Controller
         return redirect()->route('fornecedores.index')->with('success', 'Fornecedor salvo com sucesso!');
     }
 
-    // Resource: PUT/PATCH /fornecedores/{id}
+
     public function update(Request $request, $id)
     {
         return $this->salvar($request, $id);
     }
 
-    // Resource: DELETE /fornecedores/{id}
+
     public function destroy($id)
     {
         $fornecedor = Fornecedor::find($id);
@@ -108,7 +108,7 @@ class FornecedorController extends Controller
         return view('fornecedores', ["fornecedores" => $dados]);
     }
 
-    // Resource: GET /fornecedores/{id}
+
     public function show($id)
     {
         return redirect()->route('fornecedores.edit', $id);
