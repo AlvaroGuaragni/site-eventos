@@ -28,8 +28,8 @@
                         <td>{{ $servico->id }}</td>
                         <td>{{ $servico->nome }}</td>
                         <td>R$ {{ number_format($servico->preco, 2, ',', '.') }}</td>
-                        <td>{{ $servico->categoria ?? '-' }}</td>
-                        <td>{{ $servico->fornecedor->nome ?? '-' }}</td>
+                        <td>{{ $servico->categoria}}</td>
+                        <td>{{ $servico->fornecedor->nome }}</td>
                         <td>{{ \Illuminate\Support\Str::limit($servico->descricao, 50) ?: '-' }}</td>
                     </tr>
                 @empty

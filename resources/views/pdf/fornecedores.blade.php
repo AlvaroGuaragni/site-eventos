@@ -28,9 +28,9 @@
                     <tr>
                         <td>{{ $fornecedor->id }}</td>
                         <td>{{ $fornecedor->nome }}</td>
-                        <td>{{ $fornecedor->telefone ?? '-' }}</td>
-                        <td>{{ $fornecedor->email ?? '-' }}</td>
-                        <td>{{ $fornecedor->cnpj ?? '-' }}</td>
+                        <td>{{ $fornecedor->telefone}}</td>
+                        <td>{{ $fornecedor->email}}</td>
+                        <td>{{ $fornecedor->cnpj}}</td>
                     </tr>
                 @empty
                     <tr>

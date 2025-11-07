@@ -7,6 +7,7 @@ use App\Http\Controllers\LocalController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\chartFornecedoresController;
 
 
 Route::get('/', function () {
@@ -59,7 +60,7 @@ Route::get('/servicos/pdf', [ServicoController::class, 'pdf'])->name('servicos.p
 
 Route::resource('fornecedores', FornecedorController::class);
 Route::post('/fornecedores/buscar', [FornecedorController::class, 'buscar'])->name('fornecedores.buscar');
-Route::get('/fornecedor/chart', [AlunoController::class, 'chart'])->name('fornecedor.chart');
+Route::get('/fornecedor/chart', [chartFornecedoresController::class, 'chart'])->name('fornecedor.chart');
 
 
 Route::resource('servicos', ServicoController::class);

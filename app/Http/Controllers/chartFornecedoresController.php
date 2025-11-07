@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\FornecedorQtdServico;
 use Illuminate\Http\Request;
 
 class chartFornecedoresController extends Controller
