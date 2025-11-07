@@ -40,9 +40,6 @@
             </tbody>
         </table>
 
-        <div class="bg-light px-3 py-2 rounded border text-center fw-bold">
-            <div>Valor Total: R$ {{ number_format($servicos->sum('preco'), 2, ',', '.') }}</div>
-        </div>
     </div>
 
 </body>

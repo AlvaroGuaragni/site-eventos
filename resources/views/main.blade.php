@@ -20,7 +20,7 @@
             <p class="text-muted mb-5">Gerencie seu evento conosco de forma simples e rápida.</p>
 
             <div class="d-grid gap-3 col-10 col-sm-8 col-md-6 mx-auto">
-                <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-primary btn-lg">
                     <i class="fa-solid fa-chart-line me-2"></i> Dashboard (Gráficos)
                 </a>
                 <a href="{{ url('/cliente/listar') }}" class="btn btn-outline-primary btn-lg">
